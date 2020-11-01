@@ -3,16 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { FeedbackService } from '../Services/feedback.service'
-import { CaptchaService } from '../Services/captcha.service'
-import { UserService } from '../Services/user.service'
-import { FormControl, Validators } from '@angular/forms'
-import { Component, OnInit } from '@angular/core'
-import { dom, library } from '@fortawesome/fontawesome-svg-core'
-import { faPaperPlane, faStar } from '@fortawesome/free-solid-svg-icons'
-import { FormSubmitService } from '../Services/form-submit.service'
-import { TranslateService } from '@ngx-translate/core'
-import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
+import {FeedbackService} from '../Services/feedback.service'
+import {CaptchaService} from '../Services/captcha.service'
+import {UserService} from '../Services/user.service'
+import {FormControl, Validators} from '@angular/forms'
+import {Component, OnInit, SecurityContext} from '@angular/core'
+import {dom, library} from '@fortawesome/fontawesome-svg-core'
+import {faPaperPlane, faStar} from '@fortawesome/free-solid-svg-icons'
+import {FormSubmitService} from '../Services/form-submit.service'
+import {TranslateService} from '@ngx-translate/core'
+import {SnackBarHelperService} from '../Services/snack-bar-helper.service'
+import {DomSanitizer} from "@angular/platform-browser";
 
 library.add(faStar, faPaperPlane)
 dom.watch()
@@ -36,7 +37,7 @@ export class ContactComponent implements OnInit {
   public error: any
 
   constructor (private userService: UserService, private captchaService: CaptchaService, private feedbackService: FeedbackService,
-    private formSubmitService: FormSubmitService, private translate: TranslateService, private snackBarHelperService: SnackBarHelperService) { }
+    private formSubmitService: FormSubmitService, private translate: TranslateService, private sanitizer: DomSanitizer, private snackBarHelperService: SnackBarHelperService) { }
 
   ngOnInit () {
     this.userService.whoAmI().subscribe((data: any) => {
@@ -66,6 +67,7 @@ export class ContactComponent implements OnInit {
     this.feedback.comment = `${this.feedbackControl.value} (${this.authorControl.value})`
     this.feedback.rating = this.rating
     this.feedback.UserId = this.userIdControl.value
+    this.feedback.comment = this.sanitizer.sanitize(SecurityContext.HTML, this.feedback.comment)
     this.feedbackService.save(this.feedback).subscribe((savedFeedback) => {
       if (savedFeedback.rating === 5) {
         this.translate.get('FEEDBACK_FIVE_STAR_THANK_YOU').subscribe((feedbackThankYou) => {

@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Component, OnInit } from '@angular/core'
-import { DomSanitizer } from '@angular/platform-browser'
-import { ConfigurationService } from '../Services/configuration.service'
-import { FeedbackService } from '../Services/feedback.service'
-import { IImage } from 'ng-simple-slideshow'
-import { dom, library } from '@fortawesome/fontawesome-svg-core'
-import { faFacebook, faReddit, faSlack, faTwitter } from '@fortawesome/free-brands-svg-icons'
-import { faNewspaper, faStar } from '@fortawesome/free-regular-svg-icons'
-import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons'
+import {Component, OnInit, SecurityContext} from '@angular/core'
+import {DomSanitizer} from '@angular/platform-browser'
+import {ConfigurationService} from '../Services/configuration.service'
+import {FeedbackService} from '../Services/feedback.service'
+import {IImage} from 'ng-simple-slideshow'
+import {dom, library} from '@fortawesome/fontawesome-svg-core'
+import {faFacebook, faReddit, faSlack, faTwitter} from '@fortawesome/free-brands-svg-icons'
+import {faNewspaper, faStar} from '@fortawesome/free-regular-svg-icons'
+import {faStar as fasStar} from '@fortawesome/free-solid-svg-icons'
 
 library.add(faFacebook, faTwitter, faSlack, faReddit, faNewspaper, faStar, fasStar)
 dom.watch()
@@ -77,8 +77,8 @@ export class AboutComponent implements OnInit {
   populateSlideshowFromFeedbacks () {
     this.feedbackService.find().subscribe((feedbacks) => {
       for (let i = 0; i < feedbacks.length; i++) {
+        feedbacks[i].comment = this.sanitizer.sanitize(SecurityContext.HTML, feedbacks[i].comment)
         feedbacks[i].comment = '<span style="width: 90%; display:block;">' + feedbacks[i].comment + '<br/>' + ' (' + this.stars[feedbacks[i].rating] + ')' + '</span>'
-        feedbacks[i].comment = this.sanitizer.bypassSecurityTrustHtml(feedbacks[i].comment)
         this.slideshowDataSource.push({ url: this.images[i % this.images.length], caption: feedbacks[i].comment })
       }
     },(err) => {

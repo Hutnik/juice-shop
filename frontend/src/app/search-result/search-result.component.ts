@@ -3,25 +3,25 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { ProductDetailsComponent } from '../product-details/product-details.component'
-import { ActivatedRoute, Router } from '@angular/router'
-import { ProductService } from '../Services/product.service'
-import { BasketService } from '../Services/basket.service'
-import { AfterViewInit, Component, NgZone, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core'
-import { MatPaginator } from '@angular/material/paginator'
-import { forkJoin, Subscription } from 'rxjs'
-import { MatTableDataSource } from '@angular/material/table'
-import { MatDialog } from '@angular/material/dialog'
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
-import { TranslateService } from '@ngx-translate/core'
-import { SocketIoService } from '../Services/socket-io.service'
-import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
+import {ProductDetailsComponent} from '../product-details/product-details.component'
+import {ActivatedRoute, Router} from '@angular/router'
+import {ProductService} from '../Services/product.service'
+import {BasketService} from '../Services/basket.service'
+import {AfterViewInit, ChangeDetectorRef, Component, NgZone, OnDestroy, SecurityContext, ViewChild} from '@angular/core'
+import {MatPaginator} from '@angular/material/paginator'
+import {forkJoin, Subscription} from 'rxjs'
+import {MatTableDataSource} from '@angular/material/table'
+import {MatDialog} from '@angular/material/dialog'
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser'
+import {TranslateService} from '@ngx-translate/core'
+import {SocketIoService} from '../Services/socket-io.service'
+import {SnackBarHelperService} from '../Services/snack-bar-helper.service'
 
-import { dom, library } from '@fortawesome/fontawesome-svg-core'
-import { faCartPlus, faEye } from '@fortawesome/free-solid-svg-icons'
-import { Product } from '../Models/product.model'
-import { QuantityService } from '../Services/quantity.service'
-import { DeluxeGuard } from '../app.guard'
+import {dom, library} from '@fortawesome/fontawesome-svg-core'
+import {faCartPlus, faEye} from '@fortawesome/free-solid-svg-icons'
+import {Product} from '../Models/product.model'
+import {QuantityService} from '../Services/quantity.service'
+import {DeluxeGuard} from '../app.guard'
 
 library.add(faEye, faCartPlus)
 dom.watch()
@@ -141,7 +141,7 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
         this.io.socket().emit('verifyLocalXssChallenge', queryParam)
       })
       this.dataSource.filter = queryParam.toLowerCase()
-      this.searchValue = this.sanitizer.bypassSecurityTrustHtml(queryParam)
+      this.searchValue = this.sanitizer.sanitize(SecurityContext.HTML, queryParam)
       this.gridDataSource.subscribe((result: any) => {
         if (result.length === 0) {
           this.emptyState = true
