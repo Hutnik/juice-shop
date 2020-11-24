@@ -12,7 +12,7 @@ module.exports = function productReviews () {
   return (req, res, next) => {
     const user = insecurity.authenticatedUsers.from(req)
     db.reviews.update(
-      { _id: req.body.id },
+      { _id: insecurity.sanitizeSecure(req.body.id) },
       { $set: { message: req.body.message } },
       { multi: true }
     ).then(
