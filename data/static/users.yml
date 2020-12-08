@@ -241,3 +241,52 @@
   password: 'y&x5Z#f6W532ZUf$q3DsdgfgfgxxUsvoCUaDzFU'
   key: emma
   role: 'customer'
+-
+  email: generalkenobi
+  password: '8QP10Cjyfy3Nh954'
+  key: generalkenobi
+  role: 'admin'
+  walletBalance: 200
+  securityQuestion:
+    id: 1
+    answer: 'I dont know imma jedi master, mate'
+  feedback:
+    comment: 'I have a bad feeling about this'
+    rating: 2
+  address:
+    - fullName: 'Obi Wan Kenobi'
+      mobileNum: 4917123123
+      zipCode: '12345'
+      streetAddress: 'coruscant 42'
+      city: 'Coruscant'
+      state: 'Coruscant'
+      country: 'Galactic Republic'
+  card:
+    - fullName: 'Obi Wan Kenobi'
+      cardNum: 1774522813342713
+      expMonth: 11
+      expYear: 2099
+-
+  email: juiceisnice
+  password: 'XY2VVksjJz89o4Nd'
+  key: juiceisnice
+  role: 'customer'
+  securityQuestion:
+    id: 2
+    answer: 'Misty or something...'
+  feedback:
+    comment: 'JUice is nice so this is nice'
+    rating: 5
+  address:
+    - fullName: 'Mark Juice'
+      mobileNum: 4216121229
+      zipCode: '54321'
+      streetAddress: 'Maxwell 42'
+      city: 'Nicetown'
+      state: 'Noparticular'
+      country: 'USA'
+  card:
+    - fullName: 'Mark Juice'
+      cardNum: 3328572812312193
+      expMonth: 10
+      expYear: 2029

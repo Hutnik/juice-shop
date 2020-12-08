@@ -642,6 +642,22 @@ function createOrders () {
       products: basket3Products,
       eta: '0',
       delivered: true
+    },
+    {
+      orderId: insecurity.hash('generalkenobi').slice(0, 4) + '-' + utils.randomHexString(16),
+      email: 'generalkenobi'.replace(/[aeiou]/gi, '*'),
+      totalPrice: basket2Products[0].total,
+      products: basket2Products,
+      eta: '0',
+      delivered: true
+    },
+    {
+      orderId: insecurity.hash('juiceisnice').slice(0, 4) + '-' + utils.randomHexString(16),
+      email: 'juiceisnice'.replace(/[aeiou]/gi, '*'),
+      totalPrice: basket1Products[0].total + basket1Products[1].total,
+      products: basket1Products,
+      eta: '0',
+      delivered: true
     }
   ]
 
